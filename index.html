@@ -3,16 +3,22 @@
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 <style>
 :root{
-  --bg:#f4f6f8;
+  --bg:#f5f4f1;
   --card:#ffffff;
-  --ink:#17212b;
-  --muted:#66727e;
-  --line:#d7dde3;
-  --nav:#18344d;
-  --accent:#356f91;
-  --good:#287452;
-  --bad:#ad514d;
+  --ink:#252a2e;
+  --muted:#737a7f;
+  --line:#d9d8d3;
+
+  --nav:#26383a;
+  --accent:#47716d;
+  --good:#4d765e;
+  --bad:#a35b50;
+  --warn:#9a7945;
 }
+
+/* =========================
+   BASE
+   ========================= */
 
 *{
   box-sizing:border-box;
@@ -28,46 +34,70 @@ body{
 .wrap{
   max-width:1550px;
   margin:auto;
-  padding:22px;
+  padding:28px 30px;
 }
 
-/* HEADER */
+/* =========================
+   HEADER
+   ========================= */
+
+/*
+   Deliberately NOT a card.
+   This makes the page feel like an
+   internal operations report rather
+   than a dashboard template.
+*/
+
 .hero{
-  background:#18344d;
-  color:#fff;
-  border-radius:9px;
-  padding:25px 30px;
-  border:1px solid #18344d;
+  background:transparent;
+  color:var(--ink);
+  border:0;
+  border-radius:0;
   box-shadow:none;
+  padding:4px 0 18px 0;
+  border-bottom:2px solid var(--nav);
 }
 
 .hero h1{
   margin:0;
-  font-size:28px;
-  letter-spacing:-.25px;
+  font-size:27px;
+  font-weight:750;
+  letter-spacing:-.35px;
+  color:#26383a;
 }
 
 .hero p{
-  margin:6px 0 0;
-  color:#d7e1e8;
+  margin:7px 0 0;
+  color:var(--muted);
+  font-size:13px;
 }
 
-/* FILTER BAR */
+/* =========================
+   FILTERS
+   ========================= */
+
 .toolbar{
   display:flex;
-  gap:12px;
+  gap:10px;
   flex-wrap:wrap;
-  background:#fff;
-  border:1px solid var(--line);
-  padding:13px;
-  border-radius:7px;
-  margin:14px 0;
+  align-items:flex-end;
+
+  background:transparent;
+  border:0;
+  border-radius:0;
+
+  padding:17px 0 14px;
+  margin:0 0 18px;
+
+  border-bottom:1px solid var(--line);
 }
 
 .toolbar label{
-  font-size:11px;
-  font-weight:800;
-  color:var(--muted);
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.25px;
+  color:#687075;
+
   display:flex;
   flex-direction:column;
   gap:5px;
@@ -75,99 +105,158 @@ body{
 
 .toolbar select,
 .toolbar input{
-  height:36px;
+  height:34px;
   min-width:185px;
-  border:1px solid #cbd5df;
-  border-radius:5px;
+
+  border:1px solid #c9cbc7;
+  border-radius:3px;
+
   padding:0 9px;
+
   background:#fff;
   color:var(--ink);
 }
 
-/* BUTTONS */
+.toolbar select:focus,
+.toolbar input:focus{
+  outline:none;
+  border-color:var(--accent);
+}
+
+/* =========================
+   BUTTONS
+   ========================= */
+
 .toolbar button,
 .toolbar a{
-  height:36px;
-  border-radius:6px;
-  padding:0 13px;
+  height:34px;
+
+  border-radius:3px;
+
+  padding:0 12px;
+
   text-decoration:none;
   font-weight:650;
+
   display:flex;
   align-items:center;
+
   cursor:pointer;
 }
 
+/* Reset = quiet secondary control */
+
 .toolbar button{
-  background:#eef2f5;
-  color:#344454;
-  border:1px solid #cbd3da;
+  background:#ecebe7;
+  color:#41494d;
+  border:1px solid #c9cbc7;
 }
 
 .toolbar button:hover{
-  background:#e4e9ed;
-  border-color:#b9c3cc;
+  background:#e2e1dc;
+  border-color:#aeb1ad;
 }
 
-/* KPI CARDS */
+/* =========================
+   KPI AREA
+   ========================= */
+
 .kpis{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:11px;
+  gap:0;
+
+  background:#fff;
+
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
 }
 
 .kpi{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:7px;
-  padding:15px;
+  background:transparent;
+
+  border:0;
+  border-right:1px solid var(--line);
+
+  border-radius:0;
+
+  padding:15px 17px;
+}
+
+.kpi:last-child{
+  border-right:0;
 }
 
 .kpi small{
-  color:var(--muted);
-  font-weight:800;
+  color:#737a7f;
+  font-size:10px;
+  font-weight:750;
+  letter-spacing:.35px;
 }
 
 .kpi strong{
   display:block;
   font-size:24px;
-  margin-top:6px;
+  line-height:1.1;
+  margin-top:7px;
+  color:#26383a;
 }
 
 .kpi span{
   display:block;
   font-size:11px;
   color:var(--muted);
-  margin-top:3px;
+  margin-top:4px;
 }
 
-/* SECTIONS */
+/* =========================
+   SECTION HEADINGS
+   ========================= */
+
 .section{
-  margin:28px 0 11px;
+  margin:31px 0 12px;
 }
 
 .section h2{
-  font-size:19px;
+  font-size:18px;
+  font-weight:700;
+
   margin:0 0 4px;
+
+  color:#2d3739;
 }
 
 .section p{
   margin:0;
+
   color:var(--muted);
-  font-size:13px;
+
+  font-size:12px;
 }
 
-/* CHART GRID */
+/* =========================
+   CHART GRID
+   ========================= */
+
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:15px;
+  gap:18px;
 }
+
+/*
+   Charts are deliberately NOT
+   floating rounded cards.
+*/
 
 .card{
   background:#fff;
+
   border:1px solid var(--line);
-  border-radius:7px;
+  border-radius:2px;
+
   padding:12px;
+
   min-height:400px;
 }
 
@@ -183,11 +272,14 @@ body{
   height:460px;
 }
 
-/* MANAGEMENT */
+/* =========================
+   MANAGEMENT
+   ========================= */
+
 .management-grid{
   display:grid;
   grid-template-columns:1fr;
-  gap:15px;
+  gap:18px;
 }
 
 .management-grid .card{
@@ -205,36 +297,42 @@ body{
 
 .management-grid th,
 .management-grid td{
-  padding:7px 8px;
+  padding:8px 9px;
 }
 
 .management-grid td.wraptext{
   white-space:normal;
   min-width:220px;
-  line-height:1.35;
+  line-height:1.4;
 }
 
 .management-grid th{
   white-space:nowrap;
 }
 
-/* SHIPMENT DETAIL */
+/* =========================
+   SHIPMENT DETAIL
+   ========================= */
+
 .detail{
   display:grid;
   grid-template-columns:1fr 1.4fr;
-  gap:15px;
+  gap:18px;
 }
 
 .panel{
   background:#fff;
+
   border:1px solid var(--line);
-  border-radius:7px;
-  padding:15px;
+  border-radius:2px;
+
+  padding:16px;
 }
 
 .panel h3{
   margin:0 0 12px;
   font-size:15px;
+  color:#30393c;
 }
 
 .fields{
@@ -249,43 +347,74 @@ body{
 }
 
 .rationale{
-  line-height:1.5;
-  background:#f7f9fb;
-  border:1px solid #e2e6ea;
-  border-radius:5px;
+  line-height:1.55;
+
+  background:#f5f4f1;
+
+  border-left:3px solid var(--accent);
+
+  border-top:0;
+  border-right:0;
+  border-bottom:0;
+
+  border-radius:0;
+
   padding:12px;
+
   font-size:12px;
 }
 
-/* TABLES */
+/* =========================
+   TABLES
+   ========================= */
+
 .table-wrap{
   overflow:auto;
+
   max-height:600px;
+
   border:1px solid var(--line);
-  border-radius:6px;
+  border-radius:2px;
+
+  background:#fff;
 }
 
 table{
   width:100%;
   min-width:1500px;
+
   border-collapse:collapse;
+
   font-size:12px;
 }
 
 th,
 td{
   padding:8px 9px;
-  border-bottom:1px solid #edf0f3;
+
+  border-bottom:1px solid #e8e7e3;
+
   text-align:left;
   vertical-align:top;
+
   white-space:nowrap;
 }
 
 th{
   position:sticky;
   top:0;
-  background:#f7f9fb;
+
+  background:#eeefec;
+
+  color:#394347;
+
+  font-weight:700;
+
   z-index:2;
+}
+
+tr:hover td{
+  background:#f7f7f4;
 }
 
 .wraptext{
@@ -293,34 +422,54 @@ th{
   min-width:300px;
 }
 
+/* =========================
+   STATUS COLORS
+   ========================= */
+
 .pos{
   color:var(--good);
-  font-weight:800;
+  font-weight:750;
 }
 
 .neg{
   color:var(--bad);
-  font-weight:800;
+  font-weight:750;
 }
 
-/* FOOTER */
+/* =========================
+   FOOTER
+   ========================= */
+
 .footer{
   margin:25px 0;
+
   color:var(--muted);
+
   font-size:11px;
+
   line-height:1.55;
 }
 
-/* RESPONSIVE */
+/* =========================
+   RESPONSIVE
+   ========================= */
+
 @media(max-width:1100px){
+
   .kpis{
     grid-template-columns:repeat(2,1fr);
   }
+
+  .kpi{
+    border-bottom:1px solid var(--line);
+  }
+
 }
 
 @media(max-width:800px){
+
   .wrap{
-    padding:12px;
+    padding:16px;
   }
 
   .grid,
@@ -329,12 +478,13 @@ th{
   }
 
   .kpis{
-    grid-template-columns:repeat(2,1fr);
+    grid-template-columns:1fr 1fr;
   }
 
   .hero h1{
     font-size:22px;
   }
+
 }
 </style></head><body><div class="wrap">
 <div class="hero"><h1>SUPPLY CHAIN WAR ROOM</h1><p>Disruption response | Network resilience | Management decisions</p></div>
