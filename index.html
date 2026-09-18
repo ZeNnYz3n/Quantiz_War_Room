@@ -1,25 +1,350 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Quantiz 2026 — Supply Chain War Room</title>
+<title>Supply Chain War Room</title>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 <style>
-:root{--bg:#f3f5f7;--card:#fff;--ink:#16202b;--muted:#64748b;--line:#dbe1e7;--nav:#102a43;--accent:#1f5f8b;--good:#24704f;--bad:#a63d40}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif}.wrap{max-width:1550px;margin:auto;padding:24px}
-.hero{background:linear-gradient(135deg,#102a43,#1f5f8b);color:#fff;border-radius:18px;padding:28px 32px;box-shadow:0 8px 25px #102a4322}.hero h1{margin:0;font-size:29px}.hero p{margin:7px 0 0;color:#dbe9f5}
-.toolbar{display:flex;gap:12px;flex-wrap:wrap;background:#fff;border:1px solid var(--line);padding:14px;border-radius:14px;margin:15px 0}.toolbar label{font-size:11px;font-weight:800;color:var(--muted);display:flex;flex-direction:column;gap:5px}.toolbar select,.toolbar input{height:36px;min-width:185px;border:1px solid #cbd5df;border-radius:8px;padding:0 9px;background:#fff}.toolbar button,.toolbar a{height:36px;border:0;border-radius:8px;padding:0 13px;background:var(--nav);color:#fff;text-decoration:none;font-weight:700;display:flex;align-items:center;cursor:pointer}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}.kpi{background:#fff;border:1px solid var(--line);border-radius:13px;padding:15px}.kpi small{color:var(--muted);font-weight:800}.kpi strong{display:block;font-size:24px;margin-top:6px}.kpi span{display:block;font-size:11px;color:var(--muted);margin-top:3px}
-.section{margin:28px 0 11px}.section h2{font-size:19px;margin:0 0 4px}.section p{margin:0;color:var(--muted);font-size:13px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:12px;min-height:400px}.wide{grid-column:1/-1}.chart{height:365px}.route-chart{height:460px}.management-grid{display:grid;grid-template-columns:1fr;gap:15px}.management-grid .card{min-height:0}.management-grid .table-wrap{max-height:520px}.management-grid table{min-width:1050px}.management-grid td.wraptext{white-space:normal;min-width:230px;line-height:1.35}.management-grid th{white-space:nowrap}
-.detail{display:grid;grid-template-columns:1fr 1.4fr;gap:15px}.panel{background:#fff;border:1px solid var(--line);border-radius:13px;padding:15px}.panel h3{margin:0 0 12px;font-size:15px}.fields{display:grid;grid-template-columns:150px 1fr;gap:7px;font-size:12px}.fields b{color:var(--muted)}.rationale{line-height:1.5;background:#f7f9fb;border-radius:9px;padding:12px;font-size:12px}
-.table-wrap{overflow:auto;max-height:600px;border:1px solid var(--line);border-radius:9px}table{width:100%;min-width:1500px;border-collapse:collapse;font-size:12px}th,td{padding:8px 9px;border-bottom:1px solid #edf0f3;text-align:left;vertical-align:top;white-space:nowrap}th{position:sticky;top:0;background:#f7f9fb;z-index:2}.wraptext{white-space:normal;min-width:300px}.pos{color:var(--good);font-weight:800}.neg{color:var(--bad);font-weight:800}
-.management-grid table{min-width:1280px;font-size:11px}.management-grid th,.management-grid td{padding:7px 8px}.management-grid td.wraptext{white-space:normal;min-width:220px;line-height:1.35}.footer{margin:25px 0;color:var(--muted);font-size:11px;line-height:1.55}@media(max-width:1100px){.kpis{grid-template-columns:repeat(2,1fr)}}@media(max-width:800px){.wrap{padding:12px}.grid,.detail{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:22px}}
+:root{
+  --bg:#f4f6f8;
+  --card:#ffffff;
+  --ink:#17212b;
+  --muted:#66727e;
+  --line:#d7dde3;
+  --nav:#18344d;
+  --accent:#356f91;
+  --good:#287452;
+  --bad:#ad514d;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+}
+
+.wrap{
+  max-width:1550px;
+  margin:auto;
+  padding:22px;
+}
+
+/* HEADER */
+.hero{
+  background:#18344d;
+  color:#fff;
+  border-radius:9px;
+  padding:25px 30px;
+  border:1px solid #18344d;
+  box-shadow:none;
+}
+
+.hero h1{
+  margin:0;
+  font-size:28px;
+  letter-spacing:-.25px;
+}
+
+.hero p{
+  margin:6px 0 0;
+  color:#d7e1e8;
+}
+
+/* FILTER BAR */
+.toolbar{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  background:#fff;
+  border:1px solid var(--line);
+  padding:13px;
+  border-radius:7px;
+  margin:14px 0;
+}
+
+.toolbar label{
+  font-size:11px;
+  font-weight:800;
+  color:var(--muted);
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+
+.toolbar select,
+.toolbar input{
+  height:36px;
+  min-width:185px;
+  border:1px solid #cbd5df;
+  border-radius:5px;
+  padding:0 9px;
+  background:#fff;
+  color:var(--ink);
+}
+
+/* BUTTONS */
+.toolbar button,
+.toolbar a{
+  height:36px;
+  border-radius:6px;
+  padding:0 13px;
+  text-decoration:none;
+  font-weight:650;
+  display:flex;
+  align-items:center;
+  cursor:pointer;
+}
+
+.toolbar button{
+  background:#eef2f5;
+  color:#344454;
+  border:1px solid #cbd3da;
+}
+
+.toolbar button:hover{
+  background:#e4e9ed;
+  border-color:#b9c3cc;
+}
+
+/* KPI CARDS */
+.kpis{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:11px;
+}
+
+.kpi{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:7px;
+  padding:15px;
+}
+
+.kpi small{
+  color:var(--muted);
+  font-weight:800;
+}
+
+.kpi strong{
+  display:block;
+  font-size:24px;
+  margin-top:6px;
+}
+
+.kpi span{
+  display:block;
+  font-size:11px;
+  color:var(--muted);
+  margin-top:3px;
+}
+
+/* SECTIONS */
+.section{
+  margin:28px 0 11px;
+}
+
+.section h2{
+  font-size:19px;
+  margin:0 0 4px;
+}
+
+.section p{
+  margin:0;
+  color:var(--muted);
+  font-size:13px;
+}
+
+/* CHART GRID */
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:7px;
+  padding:12px;
+  min-height:400px;
+}
+
+.wide{
+  grid-column:1/-1;
+}
+
+.chart{
+  height:365px;
+}
+
+.route-chart{
+  height:460px;
+}
+
+/* MANAGEMENT */
+.management-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:15px;
+}
+
+.management-grid .card{
+  min-height:0;
+}
+
+.management-grid .table-wrap{
+  max-height:520px;
+}
+
+.management-grid table{
+  min-width:1280px;
+  font-size:11px;
+}
+
+.management-grid th,
+.management-grid td{
+  padding:7px 8px;
+}
+
+.management-grid td.wraptext{
+  white-space:normal;
+  min-width:220px;
+  line-height:1.35;
+}
+
+.management-grid th{
+  white-space:nowrap;
+}
+
+/* SHIPMENT DETAIL */
+.detail{
+  display:grid;
+  grid-template-columns:1fr 1.4fr;
+  gap:15px;
+}
+
+.panel{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:7px;
+  padding:15px;
+}
+
+.panel h3{
+  margin:0 0 12px;
+  font-size:15px;
+}
+
+.fields{
+  display:grid;
+  grid-template-columns:150px 1fr;
+  gap:7px;
+  font-size:12px;
+}
+
+.fields b{
+  color:var(--muted);
+}
+
+.rationale{
+  line-height:1.5;
+  background:#f7f9fb;
+  border:1px solid #e2e6ea;
+  border-radius:5px;
+  padding:12px;
+  font-size:12px;
+}
+
+/* TABLES */
+.table-wrap{
+  overflow:auto;
+  max-height:600px;
+  border:1px solid var(--line);
+  border-radius:6px;
+}
+
+table{
+  width:100%;
+  min-width:1500px;
+  border-collapse:collapse;
+  font-size:12px;
+}
+
+th,
+td{
+  padding:8px 9px;
+  border-bottom:1px solid #edf0f3;
+  text-align:left;
+  vertical-align:top;
+  white-space:nowrap;
+}
+
+th{
+  position:sticky;
+  top:0;
+  background:#f7f9fb;
+  z-index:2;
+}
+
+.wraptext{
+  white-space:normal;
+  min-width:300px;
+}
+
+.pos{
+  color:var(--good);
+  font-weight:800;
+}
+
+.neg{
+  color:var(--bad);
+  font-weight:800;
+}
+
+/* FOOTER */
+.footer{
+  margin:25px 0;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.55;
+}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+  .kpis{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:800px){
+  .wrap{
+    padding:12px;
+  }
+
+  .grid,
+  .detail{
+    grid-template-columns:1fr;
+  }
+
+  .kpis{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .hero h1{
+    font-size:22px;
+  }
+}
 </style></head><body><div class="wrap">
-<div class="hero"><h1>QUANTIZ 2026 — SUPPLY CHAIN WAR ROOM</h1><p>Disruption response, network resilience and management decision dashboard</p></div>
+<div class="hero"><h1>SUPPLY CHAIN WAR ROOM</h1><p>Disruption response | Network resilience | Management decisions</p></div>
 <div class="toolbar">
 <label>Customer<select id="customer"><option>All</option></select></label>
 <label>Product<select id="product"><option>All</option></select></label>
 <label>BAU route<select id="route"><option>All</option></select></label>
 <label>Management action<select id="state"><option>All</option></select></label>
 <label>Shipment search<input id="ship" placeholder="SGL-1056"></label>
-<button onclick="resetFilters()">Reset</button>
+<button class="reset-btn" onclick="resetFilters()">Reset filters</button>
 </div><div class="kpis" id="kpis"></div>
 
 <div class="section"><h2>The disruption created a material profitability gap</h2><p>Routing recovery improves the portfolio, but a residual gap remains. <b>Improvement vs BAU is not the same as profitability.</b></p></div>
